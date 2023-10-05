@@ -181,7 +181,7 @@ bool Graph::visitado(Node* nodo, int i) {
 void Graph::imprimir_resultado(Node* nodo, int origen) {
   ofstream fout("salida.csv", ios::app);
   float coste_camino = nodo->get_coste();
-  fout << fichero_ << "," << nodos_ << "," << aristas_ << "," << origen << "," << nodo->get_id()+1 << ",";
+  fout << fichero_ << ";" << nodos_ << ";" << aristas_ << ";" << origen << ";" << nodo->get_id()+1 << ";";
 
   // Creo un vector para poder imprimir el camino de izquierda a derecha
   vector<Node*> imprimir;
@@ -195,8 +195,9 @@ void Graph::imprimir_resultado(Node* nodo, int origen) {
   for (int i = imprimir.size()-1; i > 0; i--)
     fout << imprimir[i]->get_id()+1 << "->";
 
-  fout << imprimir[0]->get_id()+1 << "," << coste_camino << "," ; //<< generados_.size() << "," << inspeccionados_.size() << endl;
+  fout << imprimir[0]->get_id()+1 << ";" << coste_camino << ";" << generados_.size() << ";" << inspeccionados_.size() << endl;
 
+  /*
   // Imprimimos vector generados
   for (int i = 0; i < generados_.size(); i++) 
     fout << generados_[i]->get_id()+1 << "[" << generados_[i]->get_nivel() << "] ";
@@ -205,6 +206,6 @@ void Graph::imprimir_resultado(Node* nodo, int origen) {
 
   // Imprimimos vector generados
   for (int i = 0; i < inspeccionados_.size(); i++) 
-    fout << inspeccionados_[i]->get_id()+1 << "[" << inspeccionados_[i]->get_nivel() << "] ";
+    fout << inspeccionados_[i]->get_id()+1 << "[" << inspeccionados_[i]->get_nivel() << "] ";*/
 
 }
