@@ -1,4 +1,6 @@
 #include <fstream>
+#include <stdlib.h>
+#include <time.h>
 #include "graph.h"
 
 using namespace std;
@@ -65,10 +67,11 @@ void Graph::algoritmo() {
 }
 
 
+// Modificacion
 Node* Graph::bfs(int ini, int final) {
 
-  // Declaramos una cola para ir metiendo los nodos hoja
-  queue<Node*> frontera;
+  // Decalro una cola de prioridad que me ordena los nodos en funcion del coste
+  priority_queue<Node*, std::vector<Node*>, decltype(cmp)> frontera(cmp); 
 
   // Generamos nodo raiz y lo metemos en la cola
   Node* raiz = new Node(ini, 0, 0, NULL);
@@ -77,12 +80,32 @@ Node* Graph::bfs(int ini, int final) {
   generados_.push_back(raiz);
 
   Node* actual = new Node();
-  
+
+  srand(time(NULL));
+  vector<Node*> elegir;
+  elegir.resize(2);
+
   // Mientras la forntera no este vacía
   while (!frontera.empty()) {
-    actual = frontera.front();
-    frontera.pop();
 
+    if (frontera.size() == 1) {
+      actual == frontera.top();
+      frontera.pop();
+    }
+    else {
+
+      elegir[0] = frontera.top(); frontera.pop();
+      elegir[1] = frontera.top(); frontera.pop();
+
+      int num = rand()%2;
+      actual = elegir[num];
+
+      if (num == 0)
+        frontera.push(elegir[1]);
+      else 
+        frontera.push(elegir[0]);
+    }
+    
     inspeccionados_.push_back(actual);
 
     // Prueba de meta
@@ -98,7 +121,7 @@ Node* Graph::bfs(int ini, int final) {
 
 }
 
-void Graph::sucesores_bfs(Node* padre, queue<Node*>& frontera) {
+void Graph::sucesores_bfs(Node* padre, priority_queue<Node*, std::vector<Node*>, decltype(cmp)>& frontera) {
 
   // Recorre en la matriz de costes la fila del nodo padre
   // Si encuentra un sucesor comprueba que no se haya repetido en el camino que está explorando y lo mete en la cola
@@ -106,8 +129,8 @@ void Graph::sucesores_bfs(Node* padre, queue<Node*>& frontera) {
       if (costes_[padre->get_id()][i] > 0 && !visitado(padre, i)) {
         Node* nodo = new Node(i, padre->get_nivel()+1, costes_[padre->get_id()][i]+padre->get_coste(), padre);
         frontera.push(nodo);
-
         generados_.push_back(nodo); // Añadimos los hijos al vector generados
+        
     }
   }
 
