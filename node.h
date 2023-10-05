@@ -2,10 +2,10 @@
 
 class Node {
  private:
-  int id_;
-  int nivel_;
-  float coste_;
-  Node* padre_;
+  int id_;      // Ientificador 
+  int nivel_;   // Profundidad en árbol
+  float coste_; // Coste acumulado
+  Node* padre_; // Puntero al padre
 
  public:
   Node();

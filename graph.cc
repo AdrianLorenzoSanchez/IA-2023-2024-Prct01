@@ -39,7 +39,6 @@ void Graph::algoritmo() {
 
   while (!salir) {
     
-
     cout << "Elija el tipo de búsqueda a realizar[b(bfs)/d(dfs)]: "; cin >> opcion;
     cout << "Elija el nodo origen y destino [1-" << nodos_ << "]: "; cin >> origen >> destino;
     
@@ -48,7 +47,6 @@ void Graph::algoritmo() {
     else 
       nodo_final = dfs(origen-1, destino-1);
 
-    
 
     // Si el coste del nodo devuelto por el algoritmo es -1 no encontró solución
     if (nodo_final->get_coste() == -1) 
@@ -197,5 +195,16 @@ void Graph::imprimir_resultado(Node* nodo, int origen) {
   for (int i = imprimir.size()-1; i > 0; i--)
     fout << imprimir[i]->get_id()+1 << "->";
 
-  fout << imprimir[0]->get_id()+1 << "," << coste_camino << "," << generados_.size() << "," << inspeccionados_.size() << endl;
+  fout << imprimir[0]->get_id()+1 << "," << coste_camino << "," ; //<< generados_.size() << "," << inspeccionados_.size() << endl;
+
+  // Imprimimos vector generados
+  for (int i = 0; i < generados_.size(); i++) 
+    fout << generados_[i]->get_id()+1 << "[" << generados_[i]->get_nivel() << "] ";
+
+  fout << ", ";
+
+  // Imprimimos vector generados
+  for (int i = 0; i < inspeccionados_.size(); i++) 
+    fout << inspeccionados_[i]->get_id()+1 << "[" << inspeccionados_[i]->get_nivel() << "] ";
+
 }

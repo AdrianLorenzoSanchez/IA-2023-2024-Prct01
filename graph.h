@@ -11,7 +11,7 @@ using namespace std;
 
 class Graph {
  private:
-  string fichero_;
+  string fichero_;                // fichero de entrada
   int nodos_;                     // numero de nodos
   int aristas_;                   // numero de aristas 
   vector<Node*> inspeccionados_;  // vector nodos inspeccionados
